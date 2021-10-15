@@ -37,6 +37,7 @@ cfg = get_cfg()
 #set yaml
 cfg.merge_from_file('content/All_X152.yaml')
 #set model weights
+cfg.MODEL.DEVICE='cpu'
 cfg.MODEL.WEIGHTS = 'content/model_final.pth' # Set path model .pth
 predictor = DefaultPredictor(cfg)
 
