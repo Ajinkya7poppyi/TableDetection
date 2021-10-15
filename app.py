@@ -1,20 +1,13 @@
+from numpy.lib import npyio
 import streamlit as st
 import os
 import numpy as np
 from PIL import Image
 from pathlib import Path
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
 st.title("Table Detector")
-import detectron2
 import TableDetector.deskew as deskew
 import TableDetector.table_detection as table_detector
-
-# import common libraries
-import os
-import json
-import itertools
-import random
 
 # import matrix libraries
 import numpy as np
@@ -45,15 +38,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg","png"])
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
     st.image(image, caption='Uploaded Image.', use_column_width=True)
-    directory = "tempDir"
-    path = os.path.join(os.getcwd(), directory)
-    p = Path(path)
-    if not p.exists():
-        os.mkdir(p)
-    with open(os.path.join(path, uploaded_file.name),"wb") as f:
-        f.write(uploaded_file.getbuffer()) 
-    file_loc = os.path.join(path, uploaded_file.name)
-    document_img = cv2.imread(uploaded_file)
+    document_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     deskewed_image = deskew.deskewImage(document_img)
-    document_img = table_detector.plot_prediction(deskewed_image, predictor)
-    st.image(document_img, caption='Uploaded Image.', use_column_width=True)
+    document_img = table_detector.get_prediction(deskewed_image, predictor)
+    st.image(document_img, caption='Result Image.', use_column_width=True)
