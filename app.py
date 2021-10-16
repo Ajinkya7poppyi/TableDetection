@@ -38,7 +38,9 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg","png"])
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
     st.image(image, caption='Uploaded Image.', use_column_width=True)
-    document_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    document_img = np.array(image)
+    if len(document_img.shape) > 1:
+        document_img  = cv2.cvtColor(document_img , cv2.COLOR_RGB2BGR)
     deskewed_image = deskew.deskewImage(document_img)
     document_img = table_detector.get_prediction(deskewed_image, predictor)
     st.image(document_img, caption='Result Image.', use_column_width=True)
