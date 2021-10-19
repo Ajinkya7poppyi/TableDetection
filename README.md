@@ -4,6 +4,6 @@
 - https://drive.google.com/uc?id=1WBk6kHHyvyEzoPBsRr2BvFY51zURjd4R
 - https://drive.google.com/uc?id=1PfA2uws919gc893-x9uMIz06zWEko8nF
 ## Install requirements
-`pip install requirements.txt`
+`bash setup.sh`
 ## Run Applications
 `streamlit run app.py`
